@@ -10,6 +10,7 @@ int capienzaMassimaEvento = Convert.ToInt32(Console.ReadLine());
 int numeroPostiPrenotati = 0;
 
 Evento eve = new Evento(titolo, Convert.ToDateTime(data), capienzaMassimaEvento, numeroPostiPrenotati);
+ProgrammaEventi programmaEventi = RegistrazioneProgrammazioneEvento();
 
 
 bool menu = true;
@@ -17,11 +18,13 @@ bool menu = true;
     {
     try
     {
+        Console.WriteLine();
         Console.WriteLine("-------------------------");
         Console.WriteLine("Benvenuto nel Terminale");
         Console.WriteLine("-------------------------");
-        Console.WriteLine(eve.Titolo);
-        Console.WriteLine(eve.Data);
+        Console.WriteLine();
+        Console.WriteLine("1 - Prenota Posti");
+        Console.WriteLine("2 - Disdici Posti");
         int selected = Convert.ToInt32(Console.ReadLine());
 
         switch (selected)
@@ -43,7 +46,13 @@ bool menu = true;
 
 
     }
+     
 
+ProgrammaEventi RegistrazioneProgrammazioneEvento()
+{
+    Console.WriteLine("Inserisci il nome del programma");
+    string titolo = Console.ReadLine();
 
-
-
+    ProgrammaEventi programmaEventi = new ProgrammaEventi(titolo);
+    return programmaEventi;
+}
