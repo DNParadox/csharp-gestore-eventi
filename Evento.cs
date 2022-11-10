@@ -1,44 +1,63 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using System.Xml.Schema;
+
 
 public  class Evento
 {
+    private string _titolo;
+    private DateTime _data;
+    private int _NumeroPostiPrenotati;
+
+
     //Variabili
     public string Titolo
     {
         get
         {
-            return Titolo;
+            return _titolo;
         }
             
-        protected set
+        set
         {
             
         }
     }
-    private int Data
+    private DateTime Data
     {
         get
         {
-            return Data;
+            return _data;
         }
         set
+        {
+          
+        }
+    }
+    public int CapienzaMassimaEvento { get; private set; }
+    public int NumeroPostiPrenotati
+    {
+        get
+        {
+            return _NumeroPostiPrenotati;
+        }
+
+        private set
         {
 
         }
     }
-    public int CapienzaMassimaEvento { get; private set; }
-    public int NumeroPostiPrenotati { get; private set; }
 
+  
   
 
     // Costruttore 
-    public Evento(string titolo, int data, int capienzaMassimaEvento, int numeroPostiPrenotati)
+    public Evento(string titolo, DateTime data, int capienzaMassimaEvento, int numeroPostiPrenotati)
     {
         Titolo = titolo;
         Data = data;
         CapienzaMassimaEvento = capienzaMassimaEvento;
         NumeroPostiPrenotati = numeroPostiPrenotati;
+
+
     }
 
 
@@ -46,30 +65,35 @@ public  class Evento
     {
         try
         {
-            if (CapienzaMassimaEvento != NumeroPostiPrenotati)
+            if (CapienzaMassimaEvento > NumeroPostiPrenotati)
             {
-                Console.WriteLine("Quanti posti vuoi prenotare?");
+               
 
                 Console.WriteLine("Attualmente Posti prenotati:{0} " , NumeroPostiPrenotati);
 
-                int AggiungiPosto = Convert.ToInt32(Console.ReadLine());
+          
+                    Console.WriteLine("Quanti posti vuoi prenotare?");
 
-                int NumeroPostiAggiornato = AggiungiPosto + NumeroPostiPrenotati;
+                    int AggiungiPosto = Convert.ToInt32(Console.ReadLine());
 
-                Console.WriteLine("Ottimo hai riservato: " + AggiungiPosto);
-                Console.WriteLine("Al momento ci sono :" + NumeroPostiAggiornato);
+                    int NumeroPostiAggiornato = AggiungiPosto + NumeroPostiPrenotati;
+                    int PostiRimanenti = CapienzaMassimaEvento - NumeroPostiAggiornato;
 
-                NumeroPostiPrenotati = NumeroPostiAggiornato;
-
+                    Console.WriteLine("Ottimo hai riservato: {0} ", AggiungiPosto);
+                    Console.WriteLine("Al momento ci sono :  {0}", NumeroPostiAggiornato);
+                    Console.WriteLine("Rimangono soltanto: {0}", PostiRimanenti + " Fai presto ad accaparrarti gli ultimi");
+                    NumeroPostiPrenotati = NumeroPostiAggiornato;
+           
+                 
             }
             else
             {
                 Console.WriteLine("Al momento non ci sono posti disponibili, riprova al prossimo Evento");
             }
         }
-        catch
+        catch(FormatException e)
         {
-
+            Console.WriteLine("Qualcosa è andato storto");
         }
     }
 
@@ -78,18 +102,20 @@ public  class Evento
     {
         try
         {
-            if (CapienzaMassimaEvento != NumeroPostiPrenotati)
+            if (NumeroPostiPrenotati <=  CapienzaMassimaEvento )
             {
-                Console.WriteLine("Attualmente Posti prenotati:{0} " + NumeroPostiPrenotati);
+                Console.WriteLine("Attualmente Posti prenotati:{0} " , NumeroPostiPrenotati);
 
-                Console.WriteLine("Quanti posti vuoi prenotare?");
+                Console.WriteLine("Quanti posti vuoi disdire?");
 
                 int DiminuisciPosto = Convert.ToInt32(Console.ReadLine());
 
                 int NumeroPostiAggiornato = NumeroPostiPrenotati - DiminuisciPosto;
+                int PostiRimanenti = CapienzaMassimaEvento - NumeroPostiAggiornato;
 
-                Console.WriteLine("Ottimo hai riservato: " + DiminuisciPosto);
-                Console.WriteLine("Al momento ci sono : {0}" , NumeroPostiAggiornato);
+                Console.WriteLine("Hai disdetto: {0} ", DiminuisciPosto);
+                Console.WriteLine("Rimangono gli ultimi: {0}", PostiRimanenti + " Posti disponibili");
+                Console.WriteLine("Al momento ci sono : {0}", NumeroPostiAggiornato + " Posti disponibili");
 
                 NumeroPostiPrenotati = NumeroPostiAggiornato;
 
@@ -107,7 +133,7 @@ public  class Evento
 
     public override string ToString()
     {
-        return Data.ToString("dd/MM/yyyy");
+        return this.Data.ToString("dd/MM/yyyy");
     }
 
 
